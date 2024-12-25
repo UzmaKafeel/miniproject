@@ -1,0 +1,279 @@
+/* Overall Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #FFF0DC;
+  
+  
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 24px;
+  margin: 0;
+}
+
+.login-icon a i {
+  margin-right: 8px; /* Space between the icon and text */
+  font-size: 30px;   /* Adjust icon size */
+  color: #000; 
+}
+
+/* Menu Bar */
+nav {
+  background-color: #F0BB78;
+  padding: 10px;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+nav li {
+  display: inline-block;
+}
+
+nav i{
+  padding-right: 10px;
+}
+
+nav a {
+  color:white;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+nav a:hover {
+  background-color:black;
+}
+
+img {
+  height: 70vh;
+  width: 100vw; 
+
+}
+
+
+/* Form */
+form {
+  width:90%;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input {
+  width: 95%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  background-color: black;
+  color: #fff;
+  border: black;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Additional Styles */
+.form-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-header img {
+  width: 50px;
+  height: 50px;
+}
+
+.form-footer {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.sales-container{
+  width:90%;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.stock-card {
+  margin-top: 10px;
+  background-color:white; /* Gradient color */
+  padding: 20px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stock-icon {
+  margin-right: 20px;
+}
+
+.stock-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.stock-info li {
+  margin-bottom: 5px;
+}
+
+.report-container {
+  margin: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.date-selector {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.report-summary {
+  margin-bottom: 20px;
+}
+
+.report-cards {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 10px;
+}
+
+.card {
+  background-color: #F0BB78;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  width: 100px;
+  height: 80px; 
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+}
+.login-container {
+  margin-top: 10%;
+  margin-left: 12%;
+  justify-items: center;
+  width: 70%;
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.login-form {
+  margin-left: 50px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.login-form h2 {
+  margin-bottom: 20px;
+}
+
+.login-form input {
+  
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.login-form .password-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.login-form button {
+  background-color: black;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-form p {
+  margin-top: 10px;
+}
+
+.login-form a {
+  color:black;
+  text-decoration: none;
+}
+
+.password-actions a:hover{
+  color: red;
+}
+h2{
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+.register-container{
+  margin-top: 100px;
+}
+
+button {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+  margin-bottom: 10px;
+}
