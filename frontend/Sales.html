@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BusinessMS</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo"><h1>BusinessMS</h1></a>
+    <div class="login-icon">
+      <a href="Login.html"><i class="fas fa-user-circle"></i></a>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="Add.html"><i class="fas fa-plus-circle"></i> Add</a></li>
+      <li><a href="Sales.html"><i class="fas fa-dollar-sign"></i> Sales</a></li>
+      <li><a href="Stocks.html"><i class="fas fa-box"></i> Stock</a></li>
+      <li><a href="Records.html"><i class="fas fa-chart-line"></i> Report</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <div>
+      <div class="sales-container">
+        <h2>Total Sale till now</h2>
+        <p id="total-sales">₹ 0.00</p>
+      </div>
+      <div class="sales-container">
+        <h2>Sold Details</h2>
+        <div class="date-selector">
+          <b><p id="current-date"></p></b>
+        </div>
+        <input type="text" id="product-id" placeholder="Product ID/Name">
+        <input type="number" id="quantity-sold" placeholder="Quantity sold">
+        <input type="number" id="price-sold" placeholder="Product sold at (Price)">
+        <button id="sold-button">SOLD</button>
+        <h2>Today's Sale</h2>
+        <p id="todays-sales">₹ 0.00</p>
+      </div>
+      <div id="stock-info">
+        <!-- Stock items will be displayed here -->
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const totalSalesElement = document.getElementById('total-sales');
+      const todaysSalesElement = document.getElementById('todays-sales');
+      const soldButton = document.getElementById('sold-button');
+      const productIdInput = document.getElementById('product-id');
+      const quantitySoldInput = document.getElementById('quantity-sold');
+      const priceSoldInput = document.getElementById('price-sold');
+      const stockInfoContainer = document.getElementById('stock-info');
+
+      fetch('http://localhost:3000/get-sales')
+        .then(response => response.json())
+        .then(sales => {
+          const totalSales = sales.reduce((acc, sale) => acc + (sale.quantitySold * sale.priceSoldAt), 0);
+          totalSalesElement.textContent = `₹ ${totalSales.toFixed(2)}`;
+
+          const today = new Date().toISOString().split('T')[0];
+          const todaysSales = sales
+            .filter(sale => new Date(sale.date).toISOString().split('T')[0] === today)
+            .reduce((acc, sale) => acc + (sale.quantitySold * sale.priceSoldAt), 0);
+          todaysSalesElement.textContent = `₹ ${todaysSales.toFixed(2)}`;
+        })
+        .catch(error => console.error('Error:', error));
+
+      soldButton.addEventListener('click', () => {
+        const itemId = productIdInput.value;
+        const itemName = productIdInput.value; // assuming itemName is the same as itemId for simplicity
+        const quantitySold = parseInt(quantitySoldInput.value);
+        const priceSoldAt = parseFloat(priceSoldInput.value);
+
+        if (!itemId || isNaN(quantitySold) || isNaN(priceSoldAt)) {
+          alert('Please enter valid sale details');
+          return;
+        }
+
+        fetch('http://localhost:3000/add-sale', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ itemId, itemName, quantitySold, priceSoldAt })
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.error) {
+              alert(data.error);
+              return;
+            }
+            alert('Sale recorded successfully!');
+            location.reload(); // Reload the page to update the sales and stock information
+          })
+          .catch(error => console.error('Error:', error));
+      });
+
+      fetch('http://localhost:3000/get-items')
+        .then(response => response.json())
+        .then(data => {
+          data.items.forEach(item => {
+            const stockCard = document.createElement('div');
+            stockCard.className = 'stock-card';
+
+            stockCard.innerHTML = `
+              <div class="stock-info">
+                <h2>${item.itemName}</h2>
+                <ul>
+                  <li>Item ID: ${item.itemId}</li>
+                  <li>Quantity: ${item.quantity}</li>
+                  <li>Cost Price: ₹${item.cost.toFixed(2)}</li>
+                  <li>Selling Price: ₹${item.selling.toFixed(2)}</li>
+                  <li>Total Cost: ₹${(item.cost * item.quantity).toFixed(2)}</li>
+                </ul>
+              </div>
+            `;
+
+            stockInfoContainer.appendChild(stockCard);
+          });
+        })
+        .catch(error => console.error('Error:', error));
+    });
+  </script>
+</body>
+</html>

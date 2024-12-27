@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BusinessMS</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    /* Compact styling for stock cards */
+    .stock-card {
+      display: inline-block;
+      width: 300px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      margin: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      vertical-align: top;
+    }
+
+    .stock-icon {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .stock-info h2 {
+      margin: 0 0 5px;
+      font-size: 16px;
+    }
+
+    .stock-info ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .stock-info li {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo"><h1>BusinessMS</h1></a>
+    <div class="login-icon">
+      <a href="Login.html"><i class="fas fa-user-circle"></i></a>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="Add.html"><i class="fas fa-plus-circle"></i> Add</a></li>
+      <li><a href="Sales.html"><i class="fas fa-dollar-sign"></i> Sales</a></li>
+      <li><a href="Stocks.html"><i class="fas fa-box"></i> Stock</a></li>
+      <li><a href="Records.html"><i class="fas fa-chart-line"></i> Report</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h2>Total Stock Cost: ₹<span id="total-cost">0.00</span></h2>
+    <div id="stocks-container">
+      <!-- Stock items will be displayed here -->
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch('http://localhost:3000/get-items')
+        .then(response => response.json())
+        .then(data => {
+          const totalCostElement = document.getElementById('total-cost');
+          const stocksContainer = document.getElementById('stocks-container');
+
+          totalCostElement.textContent = data.totalCost.toFixed(2);
+
+          data.items.forEach(item => {
+            if (item.quantity > 0) { // Only display items with quantity > 0
+              const stockCard = document.createElement('div');
+              stockCard.className = 'stock-card';
+
+              stockCard.innerHTML = `
+                <div class="stock-icon">
+                  <svg width="50" height="50"></svg>
+                </div>
+                <div class="stock-info">
+                  <h2>${item.itemName}</h2>
+                  <ul>
+                    <li><strong>Item ID:</strong> ${item.id}</li>
+                    <li><strong>Quantity:</strong> ${item.quantity}</li>
+                    <li><strong>Cost Price:</strong> ₹${item.cost.toFixed(2)}</li>
+                    <li><strong>Selling Price:</strong> ₹${item.selling.toFixed(2)}</li>
+                  </ul>
+                </div>
+              `;
+
+              stocksContainer.appendChild(stockCard);
+            }
+          });
+        })
+        .catch(error => console.error('Error:', error));
+    });
+  </script>
+</body>
+</html>
