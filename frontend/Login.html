@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BusinessMS Login</title>
+    <link rel="stylesheet" href="style.css"> </head>
+<body>
+    
+    <div class="login-container">
+        <div class="login-form">
+            <h2>Login</h2>
+            <form>
+                <input type="email" id="email"placeholder="email" required>
+                <input type="password" id="password"placeholder="Password" required>
+                <p id="message"></p>
+                <button type="submit">CONTINUE</button>
+                
+                <p>Don't have an account? <b><a href="register.html">Sign Up</a></b></p>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+          event.preventDefault();
+    
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+    
+          // Send login credentials to the server
+          fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.message === 'Login successful') {
+              window.location.href = 'Add.html'; // Redirect to the Add Item page
+            } else {
+              document.getElementById('message').innerText = 'Invalid email or password';
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+        });
+      </script>
+</body>
+</html>
